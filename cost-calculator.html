@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <!-- for the time being I want to keep both the css and js embedded -->
 <head>
 <title>Cost Calculator - Work out your monthly living costs</title>
@@ -16,6 +16,15 @@
 <!-- new items will go here -->
 <ul>
 </form>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
+<script type="text/javascript">
+$(document).ready(function(){
+$('button').on('click', function() {
+$('#add-item').toggle();
+return false;
+});
+
+});// end ready
+</script>
 </body>
 </html>
