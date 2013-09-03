@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <!-- for the time being I want to keep both the css and js embedded -->
 <head>
 <title>Cost Calculator - Work out your monthly living costs</title>
@@ -6,19 +6,42 @@
 <body>
 <h1>Cost Calculator</h1>
 <p>Add a cost item below and see the total at the bottom.</p>
+<ul>
+<li>Check inputs for number or text</li>
+<li>Radio buttons to specify weekly, monthly or yearly</li>
+<li>Click on add item add the new item and show totals - weekly, monthly and yearly</li>
+<li>Each row has a delete button which will pop an alert to confirm</li>
+<li>Each row starts with a number</li>
+<li>Each row has an edit button</li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
 <form>
 <label for="add-item">Item</label>
 <input type="text" id="add-item" name="add-item" value="" />
 <label for="add-cost">Cost</label>
 <input type="text" id="add-cost" name="add-cost" value="" />
 <button>Add Item</button>
-<ul>
-<!-- new items will go here -->
-<ul>
 </form>
+<table>
+<thead>
+<th>Item</th><th>Cost</th><th>Frequency</th>
+</thead>
+<tbody>
+<!-- the table rows will be added dynamically here -->
+</tbody>
+</table>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
 <script type="text/javascript">
 $(document).ready(function(){
+var newItem = ""; 
+var newCost = "";
+var $input = $('input');
+$input.keyup(function(){
+	$input = $(this).val();
+});
 $('button').on('click', function() {
 $('#add-item').toggle();
 return false;
