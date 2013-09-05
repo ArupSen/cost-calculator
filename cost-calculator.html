@@ -2,8 +2,14 @@
 <!-- for the time being I want to keep both the css and js embedded -->
 <head>
 <title>Cost Calculator - Work out your monthly living costs</title>
+<style type="text/css">
+#wrapper {margin: 0 auto;width:500px;}
+table {margin-top: 30px;}
+th {min-width: 150px;}
+</style>
 </head>
 <body>
+<div id="wrapper">
 <h1>Cost Calculator</h1>
 <p>Add a cost item below and see the total at the bottom.</p>
 <ul>
@@ -33,17 +39,23 @@
 <!-- the table rows will be added dynamically here -->
 </tbody>
 </table>
+</div> <!-- end #wrapper -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
 <script type="text/javascript">
 $(document).ready(function(){
 var newItem = ""; 
 var newCost = "";
-var $input = $('input');
-$input.keyup(function(){
-	$input = $(this).val();
+var $addItem = $('#add-item');
+var $addCost = $('#add-cost');
+$addItem.keyup(function(){
+	newItem = $(this).val();
+});
+$addCost.keyup(function(){
+	newCost = $(this).val();
 });
 $('button').on('click', function() {
-$('#add-item').toggle();
+var newRow = "<tr><td>" + newItem + "</td><td>" + newCost + "</td></tr>";
+$('tbody').append(newRow);
 return false;
 });
 
