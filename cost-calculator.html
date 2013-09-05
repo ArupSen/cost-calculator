@@ -26,9 +26,12 @@ th {min-width: 150px;}
 </ul>
 <form>
 <label for="add-item">Item</label>
-<input type="text" id="add-item" name="add-item" value="" />
+<input type="text" id="add-item" name="add-item" value="" /><br />
 <label for="add-cost">Cost</label>
-<input type="text" id="add-cost" name="add-cost" value="" />
+<input type="text" id="add-cost" name="add-cost" value="" /><br />
+<input type="radio" name="frequency" value="weekly" />Weekly
+<input type="radio" name="frequency" value="monthly" checked="checked" />Monthly
+<input type="radio" name="frequency" value="yearly" />Yearly<br />
 <button>Add Item</button>
 </form>
 <table>
