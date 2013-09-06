@@ -30,7 +30,7 @@ th {min-width: 150px;}
 <label for="add-cost">Cost</label>
 <input type="text" id="add-cost" name="add-cost" value="" /><br />
 <input type="radio" name="frequency" value="weekly" />Weekly
-<input type="radio" name="frequency" value="monthly" checked="checked" />Monthly
+<input type="radio" name="frequency" value="monthly" checked />Monthly
 <input type="radio" name="frequency" value="yearly" />Yearly<br />
 <button>Add Item</button>
 </form>
@@ -48,16 +48,21 @@ th {min-width: 150px;}
 $(document).ready(function(){
 var newItem = ""; 
 var newCost = "";
+var frequency = "monthly";
 var $addItem = $('#add-item');
 var $addCost = $('#add-cost');
+var $frequency = $('input[type="radio"]:checked');
 $addItem.keyup(function(){
 	newItem = $(this).val();
 });
 $addCost.keyup(function(){
 	newCost = $(this).val();
 });
+$('input[type="radio"]').on('click', function(){
+	frequency = $(this).val();
+});
 $('button').on('click', function() {
-var newRow = "<tr><td>" + newItem + "</td><td>" + newCost + "</td></tr>";
+var newRow = "<tr><td>" + newItem + "</td><td>&pound;" + newCost + "</td><td>" + frequency + "</td></tr>";
 $('tbody').append(newRow);
 return false;
 });
