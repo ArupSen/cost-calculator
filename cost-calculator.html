@@ -5,7 +5,8 @@
 <style type="text/css">
 #wrapper {margin: 0 auto;width:500px;}
 table {margin-top: 30px;}
-th {min-width: 150px;}
+th, td {min-width: 150px;}
+td {text-align: center;}
 </style>
 </head>
 <body>
@@ -14,15 +15,11 @@ th {min-width: 150px;}
 <p>Add a cost item below and see the total at the bottom.</p>
 <ul>
 <li>Check inputs for number or text</li>
-<li>Radio buttons to specify weekly, monthly or yearly</li>
-<li>Click on add item add the new item and show totals - weekly, monthly and yearly</li>
 <li>Each row has a delete button which will pop an alert to confirm</li>
+<li>Totals for each frequency are displayed at the bottom</li>
 <li>Each row starts with a number</li>
 <li>Each row has an edit button</li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
+<li>Use local storage to save data</li>
 </ul>
 <form>
 <label for="add-item">Item</label>
@@ -34,12 +31,19 @@ th {min-width: 150px;}
 <input type="radio" name="frequency" value="yearly" />Yearly<br />
 <button>Add Item</button>
 </form>
-<table>
+<table id="cost-list">
 <thead>
 <th>Item</th><th>Cost</th><th>Frequency</th>
 </thead>
 <tbody>
 <!-- the table rows will be added dynamically here -->
+</tbody>
+</table>
+<table id="totals">
+<tbody>
+<tr><td>Weekly Costs</td><td></td></tr>
+<tr><td>Monthly Costs</td><td></td></tr>
+<tr><td>Yearly Costs</td><td></td></tr>
 </tbody>
 </table>
 </div> <!-- end #wrapper -->
@@ -68,6 +72,9 @@ return false;
 });
 
 });// end ready
+if (localStorage) {
+	console.log("There is local storage");
+}
 </script>
 </body>
 </html>
