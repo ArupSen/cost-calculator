@@ -41,9 +41,9 @@ td {text-align: center;}
 </table>
 <table id="totals">
 <tbody>
-<tr><td>Weekly Costs</td><td></td></tr>
-<tr><td>Monthly Costs</td><td></td></tr>
-<tr><td>Yearly Costs</td><td></td></tr>
+<tr><td>Total Weekly Costs</td><td></td></tr>
+<tr><td>Total Monthly Costs</td><td></td></tr>
+<tr><td>Total Yearly Costs</td><td></td></tr>
 </tbody>
 </table>
 </div> <!-- end #wrapper -->
@@ -62,15 +62,23 @@ $addItem.keyup(function(){
 $addCost.keyup(function(){
 	newCost = $(this).val();
 });
+// cache the value for monthly, weekly or yearly
 $('input[type="radio"]').on('click', function(){
 	frequency = $(this).val();
 });
+// add a new row when the 'add item' button is clicked
 $('button').on('click', function() {
-var newRow = "<tr><td>" + newItem + "</td><td>&pound;" + newCost + "</td><td>" + frequency + "</td></tr>";
-$('tbody').append(newRow);
+	var newRow = "<tr><td>" + newItem + 
+			"</td><td>&pound;" + newCost + 
+			"</td><td>" + frequency + 
+			"</td><td><button class='delete'>delete</button></td></tr>";
+$('tbody').closest('#cost-list').append(newRow);
 return false;
 });
-
+// pop a confirm dialogue when delete is clicked
+$('#cost-list').on('click', '.delete', function() {
+	confirm('Are you sure?');
+});
 });// end ready
 if (localStorage) {
 	console.log("There is local storage");
