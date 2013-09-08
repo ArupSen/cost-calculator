@@ -7,6 +7,7 @@
 table {margin-top: 30px;}
 th, td {min-width: 150px;}
 td {text-align: center;}
+li {list-style: square;}
 </style>
 </head>
 <body>
@@ -16,6 +17,7 @@ td {text-align: center;}
 <ul>
 <li>Check inputs for number or text</li>
 <li>Each row has a delete button which will pop an alert to confirm</li>
+<li>Deleting a row should update the totals</li>
 <li>Totals for each frequency are displayed at the bottom</li>
 <li>Each row starts with a number</li>
 <li>Each row has an edit button</li>
@@ -76,8 +78,12 @@ $('tbody').closest('#cost-list').append(newRow);
 return false;
 });
 // pop a confirm dialogue when delete is clicked
+// clicking OK removes the row
+// should also update the totals
 $('#cost-list').on('click', '.delete', function() {
-	confirm('Are you sure?');
+if (confirm('Are you sure?')){
+	$(this).closest('tr').remove();
+	}
 });
 });// end ready
 if (localStorage) {
