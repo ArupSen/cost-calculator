@@ -43,9 +43,9 @@ li {list-style: square;}
 </table>
 <table id="totals">
 <tbody>
-<tr><td>Total Weekly Costs</td><td></td></tr>
-<tr><td>Total Monthly Costs</td><td></td></tr>
-<tr><td>Total Yearly Costs</td><td></td></tr>
+<tr id="weekly"><td>Total Weekly Costs</td><td></td></tr>
+<tr id="monthly"><td>Total Monthly Costs</td><td></td></tr>
+<tr id="yearly"><td>Total Yearly Costs</td><td></td></tr>
 </tbody>
 </table>
 </div> <!-- end #wrapper -->
@@ -58,6 +58,7 @@ var frequency = "monthly";
 var $addItem = $('#add-item');
 var $addCost = $('#add-cost');
 var $frequency = $('input[type="radio"]:checked');
+var yearlyTotal = 0;
 $addItem.keyup(function(){
 	newItem = $(this).val();
 });
@@ -69,13 +70,24 @@ $('input[type="radio"]').on('click', function(){
 	frequency = $(this).val();
 });
 // add a new row when the 'add item' button is clicked
+// adding a new row should update totals
 $('button').on('click', function() {
 	var newRow = "<tr><td>" + newItem + 
 			"</td><td>&pound;" + newCost + 
 			"</td><td>" + frequency + 
 			"</td><td><button class='delete'>delete</button></td></tr>";
-$('tbody').closest('#cost-list').append(newRow);
-return false;
+	$('tbody').closest('#cost-list').append(newRow);
+	var muliplier = 0;
+	if (frequency === 'weekly') {
+		multiplier = 52;
+	} else if (frequency === 'monthly') {
+		multiplier = 12;
+	} else {
+		multiplier = 1;
+	}
+	yearlyTotal += parseFloat(newCost) * multiplier;
+	$('#yearly').find('td').last().html("&pound; " + yearlyTotal);
+	return false;
 });
 // pop a confirm dialogue when delete is clicked
 // clicking OK removes the row
