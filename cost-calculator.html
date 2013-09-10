@@ -76,7 +76,18 @@ $('button').on('click', function() {
 			"</td><td>&pound;" + newCost + 
 			"</td><td>" + frequency + 
 			"</td><td><button class='delete'>delete</button></td></tr>";
+	// some error checking before appending the row
+	// if the either or both fields are empty
+	if (newCost === '' || newItem === '') {
+		alert('You need to fill in both the Cost and Item fields');
+		return false;
+	// if cost is not a number 
+	} else if(newCost != newCost.match(/^[0-9]+\.?[0-9]+$/)){
+		alert('Cost needs to be number');
+		return false;
+	} else {
 	$('tbody').closest('#cost-list').append(newRow);
+	// add the amount to the yearly total
 	var muliplier = 0;
 	if (frequency === 'weekly') {
 		multiplier = 52;
@@ -88,6 +99,7 @@ $('button').on('click', function() {
 	yearlyTotal += parseFloat(newCost) * multiplier;
 	$('#yearly').find('td').last().html("&pound; " + yearlyTotal);
 	return false;
+	}
 });
 // pop a confirm dialogue when delete is clicked
 // clicking OK removes the row
