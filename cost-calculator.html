@@ -15,8 +15,6 @@ li {list-style: square;}
 <h1>Cost Calculator</h1>
 <p>Add a cost item below and see the total at the bottom.</p>
 <ul>
-<li>Check inputs for number or text</li>
-<li>Each row has a delete button which will pop an alert to confirm</li>
 <li>Deleting a row should update the totals</li>
 <li>Totals for each frequency are displayed at the bottom</li>
 <li>Each row starts with a number</li>
@@ -97,7 +95,7 @@ $('button').on('click', function() {
 		multiplier = 1;
 	}
 	yearlyTotal += parseFloat(newCost) * multiplier;
-	$('#yearly').find('td').last().html("&pound; " + yearlyTotal);
+	$('#yearly').find('td').last().html("&pound; " + yearlyTotal.toFixed(2));
 	return false;
 	}
 });
