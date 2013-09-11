@@ -57,20 +57,34 @@ var $addItem = $('#add-item');
 var $addCost = $('#add-cost');
 var $frequency = $('input[type="radio"]:checked');
 var yearlyTotal = 0;
+var multiplier = 12;
+var rowYearlyTotal = 0;
+// update the value for newItem
 $addItem.keyup(function(){
 	newItem = $(this).val();
 });
+// update the value for newCost
 $addCost.keyup(function(){
 	newCost = $(this).val();
 });
 // cache the value for monthly, weekly or yearly
 $('input[type="radio"]').on('click', function(){
 	frequency = $(this).val();
+	if (frequency === 'weekly') {
+		multiplier = 52;
+	} else if (frequency === 'monthly') {
+		multiplier = 12;
+	} else {
+		multiplier = 1;
+	}
 });
+
 // add a new row when the 'add item' button is clicked
 // adding a new row should update totals
 $('button').on('click', function() {
-	var newRow = "<tr><td>" + newItem + 
+	// calculate the yearly total for the new row
+	rowYearlyTotal = parseFloat(newCost) * multiplier;
+	var newRow = "<tr data-rowtotal='" + rowYearlyTotal +"'><td>" + newItem + 
 			"</td><td>&pound;" + newCost + 
 			"</td><td>" + frequency + 
 			"</td><td><button class='delete'>delete</button></td></tr>";
@@ -85,16 +99,9 @@ $('button').on('click', function() {
 		return false;
 	} else {
 	$('tbody').closest('#cost-list').append(newRow);
+
 	// add the amount to the yearly total
-	var muliplier = 0;
-	if (frequency === 'weekly') {
-		multiplier = 52;
-	} else if (frequency === 'monthly') {
-		multiplier = 12;
-	} else {
-		multiplier = 1;
-	}
-	yearlyTotal += parseFloat(newCost) * multiplier;
+	yearlyTotal += rowYearlyTotal;
 	$('#yearly').find('td').last().html("&pound; " + yearlyTotal.toFixed(2));
 	return false;
 	}
@@ -104,7 +111,9 @@ $('button').on('click', function() {
 // should also update the totals
 $('#cost-list').on('click', '.delete', function() {
 if (confirm('Are you sure?')){
+	yearlyTotal -= $(this).closest('tr').data('rowtotal');
 	$(this).closest('tr').remove();
+	$('#yearly').find('td').last().html("&pound; " + yearlyTotal.toFixed(2));
 	}
 });
 });// end ready
