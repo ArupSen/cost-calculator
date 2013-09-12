@@ -8,6 +8,7 @@ table {margin-top: 30px;}
 th, td {min-width: 150px;}
 td {text-align: center;}
 li {list-style: square;}
+.add {position:relative;left: 250px;top: -60px;}
 </style>
 </head>
 <body>
@@ -15,8 +16,7 @@ li {list-style: square;}
 <h1>Cost Calculator</h1>
 <p>Add a cost item below and see the total at the bottom.</p>
 <ul>
-<li>Deleting a row should update the totals</li>
-<li>Totals for each frequency are displayed at the bottom</li>
+<li>Adding a new item should clear the input fields</li>
 <li>Each row starts with a number</li>
 <li>Each row has an edit button</li>
 <li>Use local storage to save data</li>
@@ -29,7 +29,7 @@ li {list-style: square;}
 <input type="radio" name="frequency" value="weekly" />Weekly
 <input type="radio" name="frequency" value="monthly" checked />Monthly
 <input type="radio" name="frequency" value="yearly" />Yearly<br />
-<button>Add Item</button>
+<button class="add">Add Item</button>
 </form>
 <table id="cost-list">
 <thead>
