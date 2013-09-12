@@ -92,8 +92,9 @@ $('input[type="radio"]').on('click', function(){
 // adding a new row should update totals
 $('button').on('click', function() {
 	// calculate the yearly total for the new row
+	// save the value in data-rowtotal attribute
 	rowYearlyTotal = parseFloat(newCost) * multiplier;
-	var newRow = "<tr data-rowtotal='" + rowYearlyTotal +"'><td>" + newItem + 
+	var newRow = "<tr data-rowtotal='" + rowYearlyTotal + "'><td>" + newItem + 
 			"</td><td>&pound;" + parseFloat(newCost).toFixed(2) + 
 			"</td><td>" + frequency + 
 			"</td><td><button class='delete'>delete</button></td></tr>";
@@ -102,9 +103,9 @@ $('button').on('click', function() {
 	if (newCost === '' || newItem === '') {
 		alert('You need to fill in both the Cost and Item fields');
 		return false;
-	// if cost is not a number 
+	// if cost is not a number or a decimal
 	} else if(newCost != newCost.match(/^[0-9]+\.?[0-9]+$/)){
-		alert('Cost needs to be number');
+		alert('Cost needs to be a number');
 		return false;
 	} else {
 	$('tbody').closest('#cost-list').append(newRow);
@@ -116,12 +117,12 @@ $('button').on('click', function() {
 	}
 });
 // pop a confirm dialogue when delete is clicked
-// clicking OK removes the row
-// should also update the totals
+// clicking OK removes the row and updates the totals
 $('#cost-list').on('click', '.delete', function() {
 if (confirm('Are you sure?')){
-	yearlyTotal -= $(this).closest('tr').data('rowtotal');
-	$(this).closest('tr').remove();
+	var $closestRow = $(this).closest('tr');
+	yearlyTotal -= $closestRow.data('rowtotal');
+	$closestRow.remove();
 	updateTotals(yearlyTotal);
 	}
 });
