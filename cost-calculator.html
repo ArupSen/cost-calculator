@@ -85,7 +85,7 @@ $('button').on('click', function() {
 	// calculate the yearly total for the new row
 	rowYearlyTotal = parseFloat(newCost) * multiplier;
 	var newRow = "<tr data-rowtotal='" + rowYearlyTotal +"'><td>" + newItem + 
-			"</td><td>&pound;" + newCost + 
+			"</td><td>&pound;" + parseFloat(newCost).toFixed(2) + 
 			"</td><td>" + frequency + 
 			"</td><td><button class='delete'>delete</button></td></tr>";
 	// some error checking before appending the row
@@ -103,6 +103,8 @@ $('button').on('click', function() {
 	// add the amount to the yearly total
 	yearlyTotal += rowYearlyTotal;
 	$('#yearly').find('td').last().html("&pound; " + yearlyTotal.toFixed(2));
+	$('#monthly').find('td').last().html("&pound; " + (yearlyTotal/12.0).toFixed(2));
+	$('#weekly').find('td').last().html("&pound; " + (yearlyTotal/52.0).toFixed(2));
 	return false;
 	}
 });
@@ -114,6 +116,8 @@ if (confirm('Are you sure?')){
 	yearlyTotal -= $(this).closest('tr').data('rowtotal');
 	$(this).closest('tr').remove();
 	$('#yearly').find('td').last().html("&pound; " + yearlyTotal.toFixed(2));
+	$('#monthly').find('td').last().html("&pound; " + (yearlyTotal/12.0).toFixed(2));
+	$('#weekly').find('td').last().html("&pound; " + (yearlyTotal/52.0).toFixed(2));
 	}
 });
 });// end ready
