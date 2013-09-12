@@ -104,7 +104,7 @@ $('button').on('click', function() {
 		alert('You need to fill in both the Cost and Item fields');
 		return false;
 	// if cost is not a number or a decimal
-	} else if(newCost != newCost.match(/^[0-9]+\.?[0-9]+$/)){
+	} else if(newCost != newCost.match(/^[0-9]+\.?[0-9]*$/)){
 		alert('Cost needs to be a number');
 		return false;
 	} else {
@@ -113,6 +113,13 @@ $('button').on('click', function() {
 	// add the amount to the yearly total
 	yearlyTotal += rowYearlyTotal;
 	updateTotals(yearlyTotal);
+	// clear the input fields to prevent add-item button 
+	// working to repeatedly adding the same item
+	var empty = '';
+	$addCost.val(empty);
+	$addItem.val(empty);
+	newCost = empty;
+	newItem = empty;
 	return false;
 	}
 });
