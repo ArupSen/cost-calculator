@@ -33,7 +33,7 @@ li {list-style: square;}
 </form>
 <table id="cost-list">
 <thead>
-<th>Item</th><th>Cost</th><th>Frequency</th>
+<th>No.</th><th>Item</th><th>Cost</th><th>Frequency</th>
 </thead>
 <tbody>
 <!-- the table rows will be added dynamically here -->
@@ -59,6 +59,7 @@ var $frequency = $('input[type="radio"]:checked');
 var yearlyTotal = 0;
 var multiplier = 12;
 var rowYearlyTotal = 0;
+var rowNum = $('#cost-list').find('tr').length;
 // function to update the yearly totals
 function updateTotals(yearlyTotal) {
 	$('#yearly').find('td').last().html("&pound; " + yearlyTotal.toFixed(2));
@@ -94,7 +95,9 @@ $('button').on('click', function() {
 	// calculate the yearly total for the new row
 	// save the value in data-rowtotal attribute
 	rowYearlyTotal = parseFloat(newCost) * multiplier;
-	var newRow = "<tr data-rowtotal='" + rowYearlyTotal + "'><td>" + newItem + 
+	var newRow = "<tr data-rowtotal='" + rowYearlyTotal + 
+			"'><td>" + rowNum + 
+			"</td><td>" + newItem + 
 			"</td><td>&pound;" + parseFloat(newCost).toFixed(2) + 
 			"</td><td>" + frequency + 
 			"</td><td><button class='delete'>delete</button></td></tr>";
@@ -113,6 +116,8 @@ $('button').on('click', function() {
 	// add the amount to the yearly total
 	yearlyTotal += rowYearlyTotal;
 	updateTotals(yearlyTotal);
+	// update the row count
+	rowNum = $('#cost-list').find('tr').length;
 	// clear the input fields to prevent add-item button 
 	// working to repeatedly adding the same item
 	var empty = '';
