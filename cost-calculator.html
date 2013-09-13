@@ -59,7 +59,6 @@ var $frequency = $('input[type="radio"]:checked');
 var yearlyTotal = 0;
 var multiplier = 12;
 var rowYearlyTotal = 0;
-var rowNum = $('#cost-list').find('tr').length;
 // function to update the yearly totals
 function updateTotals(yearlyTotal) {
 	$('#yearly').find('td').last().html("&pound; " + yearlyTotal.toFixed(2));
@@ -88,7 +87,17 @@ $('input[type="radio"]').on('click', function(){
 		multiplier = 1;
 	}
 });
-	
+// update the row numbering 
+function updateRowNum() {
+	var $costRow = $('#cost-list').find('tbody tr');
+	var rowCount = $costRow.length;
+	var firstRow = $costRow.first();
+	firstRow.find('td').first().text(1);
+		for (var i = 1; i < rowCount; i++) {
+		firstRow.next().find('td').first().text(i);
+		firstRow = firstRow.next();
+		}
+}
 // add a new row when the 'add item' button is clicked
 // adding a new row should update totals
 $('button').on('click', function() {
@@ -96,7 +105,7 @@ $('button').on('click', function() {
 	// save the value in data-rowtotal attribute
 	rowYearlyTotal = parseFloat(newCost) * multiplier;
 	var newRow = "<tr data-rowtotal='" + rowYearlyTotal + 
-			"'><td>" + rowNum + 
+			"'><td>" + "&nbsp;" + 
 			"</td><td>" + newItem + 
 			"</td><td>&pound;" + parseFloat(newCost).toFixed(2) + 
 			"</td><td>" + frequency + 
@@ -116,8 +125,8 @@ $('button').on('click', function() {
 	// add the amount to the yearly total
 	yearlyTotal += rowYearlyTotal;
 	updateTotals(yearlyTotal);
-	// update the row count
-	rowNum = $('#cost-list').find('tr').length;
+	// update the row numbering
+	updateRowNum();
 	// clear the input fields to prevent add-item button 
 	// working to repeatedly adding the same item
 	var empty = '';
@@ -136,6 +145,7 @@ if (confirm('Are you sure?')){
 	yearlyTotal -= $closestRow.data('rowtotal');
 	$closestRow.remove();
 	updateTotals(yearlyTotal);
+	updateRowNum();
 	}
 });
 });// end ready
