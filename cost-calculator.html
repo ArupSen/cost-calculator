@@ -3,11 +3,12 @@
 <head>
 <title>Cost Calculator - Work out your monthly living costs</title>
 <style type="text/css">
-#wrapper {margin: 0 auto;width:500px;}
+#wrapper {margin: 0 auto;width:500px;position: relative;}
 table {margin-top: 30px;}
 th, td {min-width: 150px;}
 td {text-align: center;}
-li {list-style: square;}
+ul {position: absolute; top: 10px; left: 350px; width: 350px;}
+li {list-style: none;}
 .add {position:relative;left: 250px;top: -60px;}
 </style>
 </head>
@@ -16,9 +17,10 @@ li {list-style: square;}
 <h1>Cost Calculator</h1>
 <p>Add a cost item below and see the total at the bottom.</p>
 <ul>
-<li>Adding a new item should clear the input fields</li>
-<li>Each row starts with a number</li>
-<li>Each row has an edit button</li>
+<li>-- TO DO LIST --</li>
+<li>Hide the table headers and totals for zero list items</li>
+<li>Possibly add a quarterly total and quarterly radio button</li>
+<li>Change delete button to a cross icon</li>
 <li>Use local storage to save data</li>
 </ul>
 <form>
@@ -94,7 +96,7 @@ function updateRowNum() {
 	var firstRow = $costRow.first();
 	firstRow.find('td').first().text(1);
 		for (var i = 1; i < rowCount; i++) {
-		firstRow.next().find('td').first().text(i);
+		firstRow.next().find('td').first().text(i+1);
 		firstRow = firstRow.next();
 		}
 }
