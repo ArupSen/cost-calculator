@@ -18,6 +18,7 @@ li {list-style: none;}
 <p>Add a cost item below and see the total at the bottom.</p>
 <ul>
 <li>-- TO DO LIST --</li>
+<li>A help button that toggles the help info</li>
 <li>Hide the table headers and totals for zero list items</li>
 <li>Possibly add a quarterly total and quarterly radio button</li>
 <li>Change delete button to a cross icon</li>
@@ -100,6 +101,9 @@ function updateRowNum() {
 		firstRow = firstRow.next();
 		}
 }
+// start by hiding the tables
+$('table').hide();
+
 // add a new row when the 'add item' button is clicked
 // adding a new row should update totals
 $('button').on('click', function() {
@@ -122,6 +126,7 @@ $('button').on('click', function() {
 		alert('Cost needs to be a number');
 		return false;
 	} else {
+	$('table').show();
 	$('tbody').closest('#cost-list').append(newRow);
 
 	// add the amount to the yearly total
@@ -148,6 +153,9 @@ if (confirm('Are you sure?')){
 	$closestRow.remove();
 	updateTotals(yearlyTotal);
 	updateRowNum();
+	if ($('#cost-list').find('tr').length === 1) {
+		$('table').hide();
+		}
 	}
 });
 });// end ready
