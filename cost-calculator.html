@@ -7,31 +7,41 @@
 table {margin-top: 30px;}
 th, td {min-width: 150px;}
 td {text-align: center;}
-ul {position: absolute; top: 10px; left: 350px; width: 350px;}
+#help {position: absolute; top: 10px; left: 350px; width: 350px;}
 li {list-style: none;}
 .add {position:relative;left: 250px;top: -60px;}
+#frequency-buttons {margin-top: 10px;}
+.toggle-help {cursor: pointer;}
+.show-help {display: none; }
 </style>
 </head>
 <body>
 <div id="wrapper">
 <h1>Cost Calculator</h1>
-<p>Add a cost item below and see the total at the bottom.</p>
+<div id="help">
+<p class="toggle-help" title="click to show help">Help?</p>
+<div class="show-help">
+<p>Add a cost item below and see the totals at the bottom.</p>
+<p>When there are no cost items the headings are hidden.</p>
 <ul>
 <li>-- TO DO LIST --</li>
 <li>A help button that toggles the help info</li>
-<li>Hide the table headers and totals for zero list items</li>
 <li>Possibly add a quarterly total and quarterly radio button</li>
 <li>Change delete button to a cross icon</li>
 <li>Use local storage to save data</li>
 </ul>
+</div><!-- end .show-help -->
+</div><!-- end #help -->
 <form>
 <label for="add-item">Item</label>
 <input type="text" id="add-item" name="add-item" value="" /><br />
 <label for="add-cost">Cost</label>
 <input type="text" id="add-cost" name="add-cost" value="" /><br />
+<div id="frequency-buttons">
 <input type="radio" name="frequency" value="weekly" />Weekly
 <input type="radio" name="frequency" value="monthly" checked />Monthly
 <input type="radio" name="frequency" value="yearly" />Yearly<br />
+</div>
 <button class="add">Add Item</button>
 </form>
 <table id="cost-list">
@@ -157,6 +167,10 @@ if (confirm('Are you sure?')){
 		$('table').hide();
 		}
 	}
+});
+// toggle the help button
+$('.toggle-help').on('click', function () {
+	$('.show-help').slideToggle('slow');
 });
 });// end ready
 if (localStorage) {
