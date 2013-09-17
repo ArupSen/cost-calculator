@@ -4,14 +4,17 @@
 <title>Cost Calculator - Work out your monthly living costs</title>
 <style type="text/css">
 #wrapper {margin: 0 auto;width:500px;position: relative;}
-table {margin-top: 30px;}
+input[type='text'] {margin: 5px 0;}
+label {margin-right: 5px;}
+table {margin-top: 60px;}
 th, td {min-width: 150px;}
 td {text-align: center;}
 #help {position: absolute; top: 10px; left: 350px; width: 350px;}
 li {list-style: none;}
 .add {position:relative;left: 250px;top: -60px;}
 #frequency-buttons {margin-top: 10px;}
-.toggle-help {cursor: pointer;}
+.toggle-help {cursor: pointer;margin:0;color:#666;}
+.toggle-help:hover {color: #000;}
 .show-help {display: none; }
 </style>
 </head>
@@ -19,7 +22,7 @@ li {list-style: none;}
 <div id="wrapper">
 <h1>Cost Calculator</h1>
 <div id="help">
-<p class="toggle-help" title="click to show help">Help?</p>
+<p class="toggle-help" title="click to show help"><span>Show</span> Help?</p>
 <div class="show-help">
 <p>Add a cost item below and see the totals at the bottom.</p>
 <p>When there are no cost items the headings are hidden.</p>
@@ -170,7 +173,16 @@ if (confirm('Are you sure?')){
 });
 // toggle the help button
 $('.toggle-help').on('click', function () {
-	$('.show-help').slideToggle('slow');
+	$('.show-help').slideToggle(600);
+	var $toggleHelp = $('.toggle-help');
+	var $showHide = $toggleHelp.find('span').text();
+	if ($showHide === 'Show') {
+		$toggleHelp.find('span').text('Hide');
+		$toggleHelp.attr('title','Click to hide help');
+	} else if ($showHide === 'Hide') {
+		$toggleHelp.find('span').text('Show');
+		$toggleHelp.attr('title','Click to show help');
+	}
 });
 });// end ready
 if (localStorage) {
