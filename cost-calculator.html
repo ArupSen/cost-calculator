@@ -24,11 +24,10 @@ li {list-style: none;}
 <div id="help">
 <p class="toggle-help" title="click to show help"><span>Show</span> Help?</p>
 <div class="show-help">
-<p>Add a cost item below and see the totals at the bottom.</p>
+<p>Add an item, add a cost, choose the frequency and see the totals at the bottom.</p>
 <p>When there are no cost items the headings are hidden.</p>
 <ul>
 <li>-- TO DO LIST --</li>
-<li>A help button that toggles the help info</li>
 <li>Possibly add a quarterly total and quarterly radio button</li>
 <li>Change delete button to a cross icon</li>
 <li>Use local storage to save data</li>
@@ -185,6 +184,7 @@ $('.toggle-help').on('click', function () {
 	$('.show-help').slideToggle(600);
 	var $toggleHelp = $('.toggle-help');
 	var $showHide = $toggleHelp.find('span').text();
+	focusItem();
 	if ($showHide === 'Show') {
 		$toggleHelp.find('span').text('Hide');
 		$toggleHelp.attr('title','Click to hide help');
