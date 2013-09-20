@@ -140,10 +140,12 @@ $('button').on('click', function() {
 	// if the either or both fields are empty
 	if (newCost === '' || newItem === '') {
 		alert('You need to fill in both the Cost and Item fields');
+		focusItem();
 		return false;
 	// if cost is not a number or a decimal
 	} else if(newCost != newCost.match(/^[0-9]+\.?[0-9]*$/)){
 		alert('Cost needs to be a number');
+		$addCost.focus().select();
 		return false;
 	} else {
 	$('table').show();
@@ -178,6 +180,8 @@ if (confirm('Are you sure?')){
 	if ($('#cost-list').find('tr').length === 1) {
 		$('table').hide();
 		}
+	} else {
+	focusItem();
 	}
 });
 // toggle the help button
