@@ -63,10 +63,13 @@ li {list-style: none;}
 <tr id="yearly"><td>Total Yearly Costs</td><td></td></tr>
 </tbody>
 </table>
-<div id="dialog-modal" title="Input fields empty">
+<!-- error messages and dialogs -->
+<div id="dialog-empty" title="Input fields empty">
   <p>You need to fill in both of the fields.</p>
 </div>
-
+<div id="dialog-number" title="Not a number">
+	<p>You need to enter a number or decimal here.</p>
+</div>
 </div> <!-- end #wrapper -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -124,10 +127,10 @@ function updateRowNum() {
 		firstRow = firstRow.next();
 		}
 }
-// start by hiding the tables and modal div
+// start by hiding the tables and error divs
 $('table').hide();
-$('#dialog-modal').hide();
-
+$('#dialog-empty').hide();
+$('#dialog-number').hide();
 // focus the first input
 focusItem();
 
@@ -147,16 +150,21 @@ $('button').on('click', function() {
 	// if the either or both fields are empty
 	if (newCost === '' || newItem === '') {
 		//alert('You need to fill in both the Cost and Item fields');
-		$('#dialog-modal').dialog({
+		$('#dialog-empty').dialog({
 			height: 200,
-			modal: true
+			modal: true,
+			close: focusItem()
 		});
-		focusItem();
 		return false;
 	// if cost is not a number or a decimal
 	} else if(newCost != newCost.match(/^[0-9]+\.?[0-9]*$/)){
-		alert('Cost needs to be a number');
-		$addCost.focus().select();
+		//alert('Cost needs to be a number');
+		$('#dialog-number').dialog({
+			height: 200,
+			modal: true,
+			close: function() {
+		$addCost.focus().select();}
+		});
 		return false;
 	} else {
 	$('table').show();
