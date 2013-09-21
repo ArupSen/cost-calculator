@@ -70,6 +70,10 @@ li {list-style: none;}
 <div id="dialog-number" title="Not a number">
 	<p>You need to enter a number or decimal here.</p>
 </div>
+<div id="dialog-delete" title="Delete row?">
+	<p>Are you sure about deleting this row?</p>
+</div>
+
 </div> <!-- end #wrapper -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
@@ -131,6 +135,7 @@ function updateRowNum() {
 $('table').hide();
 $('#dialog-empty').hide();
 $('#dialog-number').hide();
+$('#dialog-delete').hide();
 // focus the first input
 focusItem();
 
@@ -189,6 +194,7 @@ $('button').on('click', function() {
 // pop a confirm dialogue when delete is clicked
 // clicking OK removes the row and updates the totals
 $('#cost-list').on('click', '.delete', function() {
+/*
 if (confirm('Are you sure?')){
 	var $closestRow = $(this).closest('tr');
 	yearlyTotal -= $closestRow.data('rowtotal');
@@ -202,6 +208,29 @@ if (confirm('Are you sure?')){
 	} else {
 	focusItem();
 	}
+*/
+	var $closestRow = $(this).closest('tr');
+	$('#dialog-delete').dialog({
+	height: 200,
+	modal: true,
+	close: focusItem(),
+	buttons: {
+		"Delete": function() {
+		yearlyTotal -= $closestRow.data('rowtotal');
+		$closestRow.remove();
+		updateTotals(yearlyTotal);
+		updateRowNum();
+		if ($('#cost-list').find('tr').length === 1) {
+		$('table').hide();
+		}
+		$(this).dialog("close");
+		},
+		"Cancel": function(){
+		$(this).dialog("close");
+		}
+
+	}
+  });
 });
 // toggle the help button
 $('.toggle-help').on('click', function () {
