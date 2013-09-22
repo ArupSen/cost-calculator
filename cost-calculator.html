@@ -11,7 +11,7 @@ th, td {min-width: 150px;}
 td {text-align: center;}
 #help {position: absolute; top: 10px; left: 350px; width: 350px;}
 li {list-style: none;}
-.add {position:relative;left: 250px;top: -60px;}
+.add {position:relative;left: 250px;top: -130px;}
 #frequency-buttons {margin-top: 10px;}
 .toggle-help {cursor: pointer;margin:0;color:#666;}
 .toggle-help:hover {color: #000;}
@@ -29,10 +29,8 @@ li {list-style: none;}
 <p>When there are no cost items the headings are hidden.</p>
 <ul>
 <li>-- TO DO LIST --</li>
-<li>Possibly add a quarterly total and quarterly radio button</li>
-<li>Change delete button to a cross icon</li>
+<li>Change delete button to a cross icon?</li>
 <li>Use local storage to save data</li>
-<li>Change confirm and alert for jquery modal dialog</li>
 </ul>
 </div><!-- end .show-help -->
 </div><!-- end #help -->
@@ -42,9 +40,10 @@ li {list-style: none;}
 <label for="add-cost">Cost</label>
 <input type="text" id="add-cost" name="add-cost" value="" /><br />
 <div id="frequency-buttons">
-<input type="radio" name="frequency" value="weekly" />Weekly
-<input type="radio" name="frequency" value="monthly" checked />Monthly
-<input type="radio" name="frequency" value="yearly" />Yearly<br />
+<input id="week" type="radio" name="frequency" value="weekly" /><label for="week">Weekly</label><br />
+<input id="month" type="radio" name="frequency" value="monthly" checked /><label for="month">Monthly</label><br />
+<input id="quarter" type="radio" name="frequency" value="quarterly" /><label for="quarter">Quarterly</label><br />
+<input id="year" type="radio" name="frequency" value="yearly" /><label for="year">Yearly</label><br />
 </div>
 <button class="add">Add Item</button>
 </form>
@@ -60,6 +59,7 @@ li {list-style: none;}
 <tbody>
 <tr id="weekly"><td>Total Weekly Costs</td><td></td></tr>
 <tr id="monthly"><td>Total Monthly Costs</td><td></td></tr>
+<tr id="quarterly"><td>Total Quarterly Costs</td><td></td></tr>
 <tr id="yearly"><td>Total Yearly Costs</td><td></td></tr>
 </tbody>
 </table>
@@ -92,6 +92,7 @@ var rowYearlyTotal = 0;
 function updateTotals(yearlyTotal) {
 	$('#yearly').find('td').last().html("&pound; " + yearlyTotal.toFixed(2));
 	$('#monthly').find('td').last().html("&pound; " + (yearlyTotal/12.0).toFixed(2));
+	$('#quarterly').find('td').last().html("&pound; " + (yearlyTotal/4.0).toFixed(2));
 	$('#weekly').find('td').last().html("&pound; " + (yearlyTotal/52.0).toFixed(2));
 }
 // set totals to zero
@@ -112,6 +113,8 @@ $('input[type="radio"]').on('click', function(){
 		multiplier = 52;
 	} else if (frequency === 'monthly') {
 		multiplier = 12;
+	} else if (frequency === 'quarterly') {
+		multiplier = 4;
 	} else {
 		multiplier = 1;
 	}
@@ -136,6 +139,7 @@ $('table').hide();
 $('#dialog-empty').hide();
 $('#dialog-number').hide();
 $('#dialog-delete').hide();
+
 // focus the first input
 focusItem();
 
