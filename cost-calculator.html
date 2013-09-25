@@ -75,6 +75,7 @@ li {list-style: none;}
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+// initialise values and cache jquery objects
 var newItem = ""; 
 var newCost = "";
 var frequency = "monthly";
@@ -84,8 +85,8 @@ var $frequency = $('input[type="radio"]:checked');
 var yearlyTotal = 0;
 var rowYearlyTotal = 0;
 var $table = $('table');
-$dialogEmpty = $('#dialog-empty');
-$dialogNumber = $('#dialog-number');
+var $dialogEmpty = $('#dialog-empty');
+var $dialogNumber = $('#dialog-number');
 var $dialogDelete = $('#dialog-delete');
 var costPeriod = {
 	'yearly' : 1.0,
@@ -183,7 +184,7 @@ $('button').on('click', function() {
 	// update the row numbering
 	updateRowNum();
 	// clear the input fields to prevent add-item button 
-	// working to repeatedly adding the same item
+	// from repeatedly adding the same item
 	var empty = '';
 	$addCost.val(empty);
 	$addItem.val(empty);
