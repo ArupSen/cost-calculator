@@ -28,6 +28,7 @@ li {list-style: none;}
 <p>Add an item, add a cost, choose the frequency and see the totals at the bottom.</p>
 <p>When there are no cost items the headings are hidden.</p>
 <p>If your browser supports local storage then data is saved automatically but only accessible through this browser and this computer.</p>
+<p class="support">Will your date get saved? <span></span></p>
 </div><!-- end .show-help -->
 </div><!-- end #help -->
 <form>
@@ -84,6 +85,7 @@ var $addCost = $('#add-cost');
 var $frequency = $('input[type="radio"]:checked');
 var yearlyTotal = 0;
 var rowYearlyTotal = 0;
+var rowData = [];
 var $table = $('table');
 var $dialogEmpty = $('#dialog-empty');
 var $dialogNumber = $('#dialog-number');
@@ -102,9 +104,60 @@ function updateTotals(yearlyTotal) {
 		$('#' + index).find('td').last().html("&pound; " + (yearlyTotal/value).toFixed(2));
 	});
 }
+// create a random string for row ID
+function randomString(stringLen) {
+	var lowerChars = 'abcdefghijklmnopqrstuvwxyz';
+	var output = '';
+	for (var i=0; i < stringLen; i++) {
+		var rNum = Math.floor(Math.random() * 25);
+		output += lowerChars.charAt(rNum);
+	}
+	return output;
+}
+// update the row numbering 
+function updateRowNum() {
+	var $costRow = $('#cost-list').find('tbody tr');
+	var rowCount = $costRow.length;
+	var firstRow = $costRow.first();
+	firstRow.find('td').first().text(1);
+		for (var i = 1; i < rowCount; i++) {
+		firstRow.next().find('td').first().text(i+1);
+		firstRow = firstRow.next();
+		}
+}
+// add yearly total to local storage
+function updateLocalStorage(thisRow) {
+	if(localStorage) {
+		localStorage.setItem(thisRow[1], thisRow);
+	}
+}
+// load stored data
+function getStoredValues() {
+	if(localStorage && localStorage.length > 0) {
+		var numStoredItems = localStorage.length;
+		// loop through local storage keys and get values
+		for (var i=0; i < numStoredItems; i++) {
+		var storedItem = localStorage.getItem(localStorage.key([i]));
+		var thisRow = storedItem.split(",");
+		thisRow[0] = parseFloat(thisRow[0]).toFixed(2);
+		yearlyTotal += parseFloat(thisRow[0]);
+		//thisRow[3] = parseFloat(thisRow[3]).toFixed(2);
+		var newRow = "<tr data-rowtotal='" + thisRow[0] + 
+			"' data-rowid='" + thisRow[1] + "'><td>" + "&nbsp;" + 
+			"</td><td>" + thisRow[2] + 
+			"</td><td>&pound;" +  thisRow[3] + 
+			"</td><td>" + thisRow[4] + 
+			"</td><td><button class='delete'>delete</button></td></tr>";
+		$('tbody').closest('#cost-list').append(newRow);
+		}
+	$table.show();
+	updateRowNum();
+	}
+}
+// load up the data from local storage
+getStoredValues();
 // set totals to zero
 updateTotals(yearlyTotal);
-
 // update the value for newItem
 $addItem.keyup(function(){
 	newItem = $(this).val();
@@ -122,19 +175,10 @@ $('input[type="radio"]').on('click', function(){
 function focusItem() {
 	$addItem.focus();
 }
-// update the row numbering 
-function updateRowNum() {
-	var $costRow = $('#cost-list').find('tbody tr');
-	var rowCount = $costRow.length;
-	var firstRow = $costRow.first();
-	firstRow.find('td').first().text(1);
-		for (var i = 1; i < rowCount; i++) {
-		firstRow.next().find('td').first().text(i+1);
-		firstRow = firstRow.next();
-		}
-}
 // start by hiding the tables and error divs
+if (localStorage.length < 1) {
 $table.hide();
+}
 $dialogEmpty.hide();
 $dialogNumber.hide();
 $dialogDelete.hide();
@@ -144,20 +188,22 @@ focusItem();
 
 // add a new row when the 'add item' button is clicked
 // adding a new row should update totals
-$('button').on('click', function() {
+$('.add').on('click', function() {
 	// calculate the yearly total for the new row
 	// save the value in data-rowtotal attribute
 	rowYearlyTotal = parseFloat(newCost) * multiplier;
-	var newRow = "<tr data-rowtotal='" + rowYearlyTotal + 
-			"'><td>" + "&nbsp;" + 
-			"</td><td>" + newItem + 
-			"</td><td>&pound;" + parseFloat(newCost).toFixed(2) + 
-			"</td><td>" + frequency + 
+	var rowID = randomString(4);
+	var decimalCost = parseFloat(newCost).toFixed(2);
+	var thisRow = [rowYearlyTotal, rowID, newItem, decimalCost, frequency];
+	var newRow = "<tr data-rowtotal='" + thisRow[0] + 
+			"' data-rowid='" + thisRow[1] + "'><td>" + "&nbsp;" + 
+			"</td><td>" + thisRow[2] + 
+			"</td><td>&pound;" +  thisRow[3] + 
+			"</td><td>" + thisRow[4] + 
 			"</td><td><button class='delete'>delete</button></td></tr>";
 	// some error checking before appending the row
 	// if the either or both fields are empty
-	if (newCost === '' || newItem === '') {
-		//alert('You need to fill in both the Cost and Item fields');
+	if (newItem === '' || newCost === '') {
 		$dialogEmpty.dialog({
 			height: 200,
 			modal: true,
@@ -181,6 +227,7 @@ $('button').on('click', function() {
 	// add the amount to the yearly total
 	yearlyTotal += rowYearlyTotal;
 	updateTotals(yearlyTotal);
+	updateLocalStorage(thisRow);
 	// update the row numbering
 	updateRowNum();
 	// clear the input fields to prevent add-item button 
@@ -221,6 +268,9 @@ if (confirm('Are you sure?')){
 		"Delete": function() {
 		yearlyTotal -= $closestRow.data('rowtotal');
 		$closestRow.remove();
+		if (localStorage) {
+			localStorage.removeItem($closestRow.data('rowid'));
+		}
 		updateTotals(yearlyTotal);
 		updateRowNum();
 		if ($('#cost-list').find('tr').length === 1) {
@@ -249,10 +299,13 @@ $('.toggle-help').on('click', function () {
 		$toggleHelp.attr('title','Click to show help');
 	}
 });
-});// end ready
+// verify local storage support
 if (localStorage) {
-	console.log("There is local storage");
+	$('.support').find('span').text('Yes');
+} else {
+	$('.support').find('span').text('No');
 }
+});// end ready
 </script>
 </body>
 </html>
