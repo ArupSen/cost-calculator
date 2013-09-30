@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <!-- for the time being I want to keep both the css and js embedded -->
 <head>
-<title>Cost Calculator - Work out your monthly living costs</title>
+<title>Expenses Calculator - Work out your monthly running costs</title>
 <style type="text/css">
 #wrapper {margin: 0 auto;width:500px;position: relative;}
 input[type='text'] {margin: 5px 0;}
 label {margin-right: 5px;}
 table {margin-top: 60px;}
+#totals td, th {text-align: left;}
 th, td {min-width: 150px;}
-td {text-align: center;}
+#cost-list tbody td:nth-of-type(3)  {
+text-align: right;
+display: inline-block;
+position: relative;
+right: 97px;
+padding: 4px 0;
+}
+#totals td:nth-of-type(2) {
+text-align: right;
+}
 #help {position: absolute; top: 10px; left: 350px; width: 350px;}
-li {list-style: none;}
 .add {position:relative;left: 250px;top: -130px;}
 #frequency-buttons {margin-top: 10px;}
 .toggle-help {cursor: pointer;margin:0;color:#666;}
@@ -21,7 +30,7 @@ li {list-style: none;}
 </head>
 <body>
 <div id="wrapper">
-<h1>Cost Calculator</h1>
+<h1>Expenses Calculator</h1>
 <div id="help">
 <p class="toggle-help" title="click to show help"><span>Show</span> Help?</p>
 <div class="show-help">
@@ -244,21 +253,6 @@ $('.add').on('click', function() {
 // pop a confirm dialogue when delete is clicked
 // clicking OK removes the row and updates the totals
 $('#cost-list').on('click', '.delete', function() {
-/*
-if (confirm('Are you sure?')){
-	var $closestRow = $(this).closest('tr');
-	yearlyTotal -= $closestRow.data('rowtotal');
-	$closestRow.remove();
-	updateTotals(yearlyTotal);
-	updateRowNum();
-	focusItem();
-	if ($('#cost-list').find('tr').length === 1) {
-		$('table').hide();
-		}
-	} else {
-	focusItem();
-	}
-*/
 	var $closestRow = $(this).closest('tr');
 	$('#dialog-delete').dialog({
 	height: 200,
