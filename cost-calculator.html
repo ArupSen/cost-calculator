@@ -3,7 +3,10 @@
 <head>
 <title>Expenses Calculator - Work out your monthly running costs</title>
 <link href='http://fonts.googleapis.com/css?family=Oswald:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <style type="text/css">
+/*override some jquery-ui styles*/
+.ui-widget, .ui-widget button{font-family: 'Oswald', sans-serif;}
 #wrapper {margin: 0 auto;width:500px;position: relative;font-family: 'Oswald', sans-serif;}
 input[type='text'] {margin: 5px 0;}
 label {margin-right: 5px;}
@@ -27,7 +30,6 @@ text-align: right;
 .toggle-help:hover {color: #000;}
 .show-help {display: none; }
 </style>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 </head>
 <body>
 <div id="wrapper">
@@ -215,7 +217,7 @@ $('.add').on('click', function() {
 	// if the either or both fields are empty
 	if (newItem === '' || newCost === '') {
 		$dialogEmpty.dialog({
-			height: 200,
+			resizable: false,
 			modal: true,
 			close: focusItem()
 		});
@@ -224,7 +226,7 @@ $('.add').on('click', function() {
 	} else if(newCost != newCost.match(/^[0-9]+\.?[0-9]*$/)){
 		//alert('Cost needs to be a number');
 		$dialogNumber.dialog({
-			height: 200,
+			resizable: false,
 			modal: true,
 			close: function() {
 		$addCost.focus().select();}
@@ -256,7 +258,7 @@ $('.add').on('click', function() {
 $('#cost-list').on('click', '.delete', function() {
 	var $closestRow = $(this).closest('tr');
 	$('#dialog-delete').dialog({
-	height: 200,
+	resizable: false,
 	modal: true,
 	close: focusItem(),
 	buttons: {
