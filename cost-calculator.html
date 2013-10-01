@@ -6,25 +6,44 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <style type="text/css">
 /*override some jquery-ui styles*/
-.ui-widget, .ui-widget button{font-family: 'Oswald', sans-serif;}
+.ui-widget, .ui-widget button, button, input{font-family: 'Oswald', sans-serif;}
 #wrapper {margin: 0 auto;width:500px;position: relative;font-family: 'Oswald', sans-serif;}
-input[type='text'] {margin: 5px 0;}
+input[type='text'] {
+	margin: 5px 0;
+	font-weight: bold;
+	font-size: 1.1em;
+	padding: 1px 3px;
+	border: 1px solid #666;
+	width: 175px;
+}
 label {margin-right: 5px;}
-table {margin-top: 60px;}
+#frequency-buttons label {
+	display: inline-block;
+	margin-left: 5px;
+}
+form label:nth-of-type(1), form label:nth-of-type(2) {
+	width: 30px;
+	display: inline-block;
+}
+table#totals {margin-top: 30px;}
+#cost-list tr:nth-of-type(even) {
+	background: #E6E6E6;
+}
+#cost-list {border-collapse: collapse;}
 #totals td, th {text-align: left;}
 th, td {min-width: 150px;}
 #cost-list tbody td:nth-of-type(3)  {
-text-align: right;
-display: inline-block;
-position: relative;
-right: 97px;
-padding: 4px 0;
+	text-align: right;
+	display: inline-block;
+	position: relative;
+	right: 97px;
+	padding: 4px 0;
 }
 #totals td:nth-of-type(2) {
 text-align: right;
 }
 #help {position: absolute; top: 10px; left: 350px; width: 350px;}
-.add {position:relative;left: 250px;top: -130px;}
+.add {position:relative;left: 163px;top: -94px;}
 #frequency-buttons {margin-top: 10px;}
 .toggle-help {cursor: pointer;margin:0;color:#666;}
 .toggle-help:hover {color: #000;}
@@ -38,7 +57,6 @@ text-align: right;
 <p class="toggle-help" title="click to show help"><span>Show</span> Help?</p>
 <div class="show-help">
 <p>Add an item, add a cost, choose the frequency and see the totals at the bottom.</p>
-<p>When there are no cost items the headings are hidden.</p>
 <p>If your browser supports local storage then data is saved automatically but only accessible through this browser and this computer.</p>
 <p class="support">Will your date get saved? <span></span></p>
 </div><!-- end .show-help -->
