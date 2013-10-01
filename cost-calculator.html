@@ -40,7 +40,11 @@ th, td {min-width: 150px;}
 	padding: 4px 0;
 }
 #totals td:nth-of-type(2) {
-text-align: right;
+	text-align: right;
+}
+.delete-all {
+	position: relative;
+	left: 280px;
 }
 #help {position: absolute; top: 10px; left: 350px; width: 350px;}
 .add {position:relative;left: 163px;top: -94px;}
@@ -58,7 +62,7 @@ text-align: right;
 <div class="show-help">
 <p>Add an item, add a cost, choose the frequency and see the totals at the bottom.</p>
 <p>If your browser supports local storage then data is saved automatically but only accessible through this browser and this computer.</p>
-<p class="support">Will your date get saved? <span></span></p>
+<p class="support">Will your data get saved? <span></span></p>
 </div><!-- end .show-help -->
 </div><!-- end #help -->
 <form>
@@ -87,7 +91,7 @@ text-align: right;
 <tr id="weekly"><td>Total Weekly Costs</td><td></td></tr>
 <tr id="monthly"><td>Total Monthly Costs</td><td></td></tr>
 <tr id="quarterly"><td>Total Quarterly Costs</td><td></td></tr>
-<tr id="yearly"><td>Total Yearly Costs</td><td></td></tr>
+<tr id="yearly"><td>Total Yearly Costs</td><td></td><td><button class='delete-all'>delete all</button></td></tr>
 </tbody>
 </table>
 <!-- error messages and dialogs -->
@@ -99,6 +103,9 @@ text-align: right;
 </div>
 <div id="dialog-delete" title="Delete row?">
 	<p>Are you sure about deleting this row?</p>
+</div>
+<div id="dialog-delete-all" title="Delete everything?">
+	<p>You are about to delete everything. Sure?</p>
 </div>
 
 </div> <!-- end #wrapper -->
@@ -120,6 +127,7 @@ var $table = $('table');
 var $dialogEmpty = $('#dialog-empty');
 var $dialogNumber = $('#dialog-number');
 var $dialogDelete = $('#dialog-delete');
+var $dialogDeleteAll = $('#dialog-delete-all');
 var costPeriod = {
 	'yearly' : 1.0,
 	'quarterly' : 4.0,
@@ -131,7 +139,7 @@ var multiplier = costPeriod['monthly'];
 // function to update the yearly totals
 function updateTotals(yearlyTotal) {
 	$.each(costPeriod, function(index, value) {
-		$('#' + index).find('td').last().html("&pound; " + (yearlyTotal/value).toFixed(2));
+			$('#' + index).find('td').eq(1).html("&pound; " + (yearlyTotal/value).toFixed(2));
 	});
 }
 // create a random string for row ID
@@ -212,6 +220,7 @@ $table.hide();
 $dialogEmpty.hide();
 $dialogNumber.hide();
 $dialogDelete.hide();
+$dialogDeleteAll.hide();
 
 // focus the first input
 focusItem();
@@ -300,6 +309,31 @@ $('#cost-list').on('click', '.delete', function() {
 	}
   });
 });
+// handler for the delete all button
+// needs to clear the rows and local storage
+$('.delete-all').on('click', function() {
+	$('#dialog-delete-all').dialog({
+	resizable: false,
+	modal: true,
+	close: focusItem(),
+	buttons: {
+		"Delete All": function() {
+		if (localStorage) {
+			localStorage.clear();
+		}
+		yearlyTotal = 0;
+		updateTotals(yearlyTotal);
+		$('#cost-list tbody tr').remove();
+		$('table').hide();
+		$(this).dialog("close");
+		},
+		"Cancel": function() {
+		$(this).dialog("close");
+		}
+	}
+});
+});
+
 // toggle the help button
 $('.toggle-help').on('click', function () {
 	$('.show-help').slideToggle(600);
