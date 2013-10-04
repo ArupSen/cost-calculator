@@ -52,6 +52,13 @@ th, td {min-width: 150px;}
 .toggle-help {cursor: pointer;margin:0;color:#666;}
 .toggle-help:hover {color: #000;}
 .show-help {display: none; }
+.cookie-policy {
+	width: 230px;
+	position: absolute;
+	top: 0px;
+	left: -260px;
+	font-size: 13px;
+}
 </style>
 </head>
 <body>
@@ -66,6 +73,12 @@ th, td {min-width: 150px;}
 <p class="extra-info">More info here - <a href="http://github.com/ArupSen/cost-calculator" target="_blank" title="github">github</a></p>
 </div><!-- end .show-help -->
 </div><!-- end #help -->
+<div class="cookie-policy">
+<h2>Cookie Policy</h2>
+<p>This website stores data on your computer. This works in a similar way to cookies. The data that is being stored is the data that you enter, namely your cost item, the cost amount and the frequency. A random four letter code that identifies each row and a total for each row displayed is also stored. That's all. This data will 'persist' or remain on your system until you delete it. There is no set expiry so that you can come back to it at any time. It is only available if you access it again with the same browser.</p>
+<p>You can turn of cookies and local storage in your browser settings. However if you do so none of your data will be saved and you will need to enter it again the next time you use this site.</p>
+<button class="cookie">Thanks, got it.</button>
+</div>
 <form>
 <label for="add-item">Item</label>
 <input type="text" id="add-item" name="add-item" value="" /><br />
@@ -348,6 +361,10 @@ $('.toggle-help').on('click', function () {
 		$toggleHelp.find('span').text('Show');
 		$toggleHelp.attr('title','Click to show help');
 	}
+});
+// hide the cookie policy
+$('.cookie').on('click', function() {
+	$('.cookie-policy').fadeOut();
 });
 // verify local storage support
 if (localStorage) {
