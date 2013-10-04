@@ -63,6 +63,7 @@ th, td {min-width: 150px;}
 <p>Add an item, add a cost, choose the frequency and see the totals at the bottom.</p>
 <p>If your browser supports local storage then data is saved automatically but only accessible through this browser and this computer.</p>
 <p class="support">Will your data get saved? <span></span></p>
+<p class="extra-info">More info here - <a href="http://github.com/ArupSen/cost-calculator" target="_blank" title="github">github</a></p>
 </div><!-- end .show-help -->
 </div><!-- end #help -->
 <form>
@@ -298,7 +299,7 @@ $('#cost-list').on('click', '.delete', function() {
 		updateTotals(yearlyTotal);
 		updateRowNum();
 		if ($('#cost-list').find('tr').length === 1) {
-		$('table').hide();
+		$table.hide();
 		}
 		$(this).dialog("close");
 		},
@@ -324,7 +325,7 @@ $('.delete-all').on('click', function() {
 		yearlyTotal = 0;
 		updateTotals(yearlyTotal);
 		$('#cost-list tbody tr').remove();
-		$('table').hide();
+		$table.hide();
 		$(this).dialog("close");
 		},
 		"Cancel": function() {
