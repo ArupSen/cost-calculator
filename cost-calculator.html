@@ -136,7 +136,6 @@ var $addCost = $('#add-cost');
 var $frequency = $('input[type="radio"]:checked');
 var yearlyTotal = 0;
 var rowYearlyTotal = 0;
-var rowData = [];
 var $table = $('table');
 var $dialogEmpty = $('#dialog-empty');
 var $dialogNumber = $('#dialog-number');
@@ -298,6 +297,9 @@ $('.add').on('click', function() {
 // clicking OK removes the row and updates the totals
 $('#cost-list').on('click', '.delete', function() {
 	var $closestRow = $(this).closest('tr');
+	var rowInfo = localStorage.getItem($closestRow.data('rowid'));
+	var rowParts = rowInfo.split(",");
+	$('#dialog-delete').append('<p>&nbsp;</p>').html(rowParts[2] + " : &pound;" + parseFloat(rowParts[3]).toFixed(2));
 	$('#dialog-delete').dialog({
 	resizable: false,
 	modal: true,
