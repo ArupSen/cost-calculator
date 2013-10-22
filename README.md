@@ -6,7 +6,10 @@ one page html, css and jquery app to calculate running costs
 TO-DO LIST
 - possibly change the delete button to a X icon
 - make a theme switcher drop-down menu
-- possibly have a currency chooser
+- possibly have a currency chooser (request from Alex)
+- save to .pdf and print stylesheet (Alex)
+- show annual cost for each item on row (Simon)
+- inline editor (Simon)
 
 Working example can be found at:
 <http://arupdesigns.co.uk/cost-calculator/cost-calculator.html>
