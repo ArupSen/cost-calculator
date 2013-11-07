@@ -299,7 +299,9 @@ $('#cost-list').on('click', '.delete', function() {
 	var $closestRow = $(this).closest('tr');
 	var rowInfo = localStorage.getItem($closestRow.data('rowid'));
 	var rowParts = rowInfo.split(",");
-	$('#dialog-delete').append('<p>&nbsp;</p>').html(rowParts[2] + " : &pound;" + parseFloat(rowParts[3]).toFixed(2));
+	var $message = $('#dialog-delete p');
+	$message.after('<p></p>');
+	$message.next().html(rowParts[2] + " : &pound;" + parseFloat(rowParts[3]).toFixed(2));
 	$('#dialog-delete').dialog({
 	resizable: false,
 	modal: true,
@@ -369,6 +371,7 @@ $('.cookie').on('click', function() {
 	$('.cookie-policy').fadeOut();
 });
 // verify local storage support
+// the 'Yes' or 'No' gets updated in the help
 if (localStorage) {
 	$('.support').find('span').text('Yes');
 } else {
