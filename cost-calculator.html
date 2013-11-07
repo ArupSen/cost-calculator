@@ -7,7 +7,17 @@
 <style type="text/css">
 /*override some jquery-ui styles*/
 .ui-widget, .ui-widget button, button, input{font-family: 'Oswald', sans-serif;}
-#wrapper {margin: 0 auto;width:500px;position: relative;font-family: 'Oswald', sans-serif;}
+#wrapper {
+	margin: 0 auto;
+	width:1020px;
+	position: relative;
+	font-family: 'Oswald', sans-serif;
+	background: url('960_grid_12_col.png') no-repeat;
+}
+form, h1 {
+	width: 320px;
+	margin-left: 360px;
+}
 input[type='text'] {
 	margin: 5px 0;
 	font-weight: bold;
@@ -25,13 +35,21 @@ form label:nth-of-type(1), form label:nth-of-type(2) {
 	width: 30px;
 	display: inline-block;
 }
-table#totals {margin-top: 30px;}
+table#totals {
+	margin-top: 30px;
+	margin-left: 40px;
+	position: absolute;
+	top: 380px;
+}
 #cost-list tr:nth-of-type(even) {
 	background: #E6E6E6;
 }
-#cost-list {border-collapse: collapse;}
+#cost-list {border-collapse: collapse;margin-left:360px;}
 #totals td, th {text-align: left;}
 th, td {min-width: 150px;}
+#totals tbody td {
+min-width: 116px;
+}
 #cost-list tbody td:nth-of-type(3)  {
 	text-align: right;
 	display: inline-block;
@@ -43,20 +61,28 @@ th, td {min-width: 150px;}
 	text-align: right;
 }
 .delete-all {
+	top: 30px;
+	right: 54px;
 	position: relative;
-	left: 280px;
 }
-#help {position: absolute; top: 10px; left: 350px; width: 350px;}
-.add {position:relative;left: 163px;top: -94px;}
+#help {position: absolute; top: 10px; left: 680px; width: 300px;}
+.add {position:relative;left: 154px;top: -94px;}
+.add span {
+	color: green;
+	font-size: 30px;
+	line-height: 0px;
+	position: relative;
+	top: 5px;
+}
 #frequency-buttons {margin-top: 10px;}
 .toggle-help {cursor: pointer;margin:0;color:#666;}
 .toggle-help:hover {color: #000;}
 .show-help {display: none; }
 .cookie-policy {
-	width: 230px;
+	width: 240px;
 	position: absolute;
 	top: 0px;
-	left: -260px;
+	left: 40px;
 	font-size: 13px;
 }
 </style>
@@ -90,7 +116,7 @@ th, td {min-width: 150px;}
 <input id="quarter" type="radio" name="frequency" value="quarterly" /><label for="quarter">Quarterly</label><br />
 <input id="year" type="radio" name="frequency" value="yearly" /><label for="year">Yearly</label><br />
 </div>
-<button class="add">Add Item</button>
+<button class="add"><span>+ </span>Add Item</button>
 </form>
 <table id="cost-list">
 <thead>
