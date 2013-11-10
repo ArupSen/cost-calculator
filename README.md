@@ -3,6 +3,12 @@ cost-calculator
 
 one page html, css and jquery app to calculate running costs
 
+The exercise started life in September 2013 as a daily programming practice session.
+At the end of the month when I had a basic working version I asked friends to help
+me with new features. What did people actually want? Continued development is not
+only about fixing bugs and refactoring code but actively listening to users even
+before building the thing.
+
 TO-DO LIST
 - possibly change the delete button to a X icon
 - make a theme switcher drop-down menu
