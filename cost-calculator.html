@@ -393,8 +393,10 @@ $('.toggle-help').on('click', function () {
 	}
 });
 // hide the cookie policy
+// move the table up
 $('.cookie').on('click', function() {
 	$('.cookie-policy').fadeOut();
+	$('#totals').delay(400).animate({'top':'0px'}, 'slow');
 });
 // verify local storage support
 // the 'Yes' or 'No' gets updated in the help
